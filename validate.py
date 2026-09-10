@@ -17,11 +17,13 @@ class Audit(HTMLParser):
 audit=Audit();audit.feed((dist/'index.html').read_text(encoding='utf-8'))
 assert not audit.errors,audit.errors
 assert not [i for i,c in Counter(audit.ids).items() if c>1],'Duplicate HTML IDs'
-assert all(f'slide-{n}' in audit.ids for n in range(1,30))
+assert all(f'slide-{n}' in audit.ids for n in range(1,30) if n not in (2,4))
+assert 'slide-2' not in audit.ids
+assert 'slide-4' not in audit.ids
 assert not any(f'slide-{n}' in audit.ids for n in range(30,104))
 for ref in audit.refs:
  if ref.startswith('#'):assert ref[1:] in audit.ids,ref
- elif not re.match(r'^(https?:|mailto:|data:)',ref):assert (dist/ref).is_file(),ref
+ elif not re.match(r'^(https?:|mailto:|data:)',ref):assert (dist/ref.split('?')[0]).is_file(),ref
 for src in ['app.js','motion.js','assets/three.module.js','assets/three.core.js']:
  r=subprocess.run(['node','--check',str(dist/src)],capture_output=True,text=True);assert r.returncode==0,r.stderr
 for ref in re.findall(r'url\(([^)]+)\)',(dist/'styles.css').read_text(encoding='utf-8')):

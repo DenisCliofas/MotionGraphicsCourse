@@ -1,6 +1,6 @@
 # Motion Design in Blender · Day 1
 
-Scroll-based adaptation of `Motion_Design_Day1_Moption_Graphics_Principles.pptx` (29 slides). The PowerPoint remains unchanged.
+Scroll-based adaptation of `Motion_Design_Day1_Moption_Graphics_Principles.pptx`. The website includes 27 of its 29 slides; the project overview and final deliverables (source slides 2 and 4) are omitted because they are presented separately. Source slide IDs are retained internally; visible slide numbering is omitted. The PowerPoint remains unchanged.
 
 ## Preview
 
