@@ -1,0 +1,56 @@
+<section class="lesson lab tracked" id="motion-lab" data-chapter="Motion playground">
+ <div class="lesson-top"><span class="eyebrow">Interactive study</span><a class="source-link" href="#slide-20">Revisit the principles ↑</a></div>
+ <h2>One object.<br>Different personalities.</h2>
+ <p class="lead">Change the motion. Compare it with the gray ball’s constant speed.</p>
+ <div class="lab-layout">
+  <div class="lab-stage">
+   <div class="scene" id="lab-scene">
+    <img class="scene-fallback" src="assets/image1.webp" alt="Geometric motion study illustration">
+    <canvas role="img" aria-label="An orange ball follows the selected movement; a smaller gray ball always moves linearly."></canvas>
+    <div class="lab-scene-label"><span>Motion comparison</span><span>A → B</span></div>
+   </div>
+   <div class="motion-legend" aria-label="Animation legend">
+    <span><i class="legend-dot selected" aria-hidden="true"></i><span>Orange: <strong id="study-label">Ease in / out</strong></span></span>
+    <span><i class="legend-dot reference" aria-hidden="true"></i><span>Gray: <strong>Always linear</strong></span></span>
+   </div>
+   <div class="lab-bar"><button id="lab-play" type="button" aria-pressed="false">Pause</button><label for="scrub">Time</label><input id="scrub" type="range" min="0" max="1000" value="0" aria-label="Scrub motion study"><output id="lab-time" for="scrub">0.0 s</output></div>
+   <div class="trails-control"><label><input type="checkbox" id="show-trails"> Show motion trails</label><span id="trail-help">Dots every 0.10 s. Close dots mean slower motion.</span></div>
+  </div>
+  <div class="lab-controls">
+   <fieldset class="mode-controls"><legend>Movement</legend>
+    <label><input type="radio" name="motion-mode" value="linear"><span>Linear</span></label>
+    <label><input type="radio" name="motion-mode" value="ease" checked><span>Ease in / out</span></label>
+    <label><input type="radio" name="motion-mode" value="anticipation"><span>Anticipation</span></label>
+    <label><input type="radio" name="motion-mode" value="overshoot"><span>Overshoot</span></label>
+    <label><input type="radio" name="motion-mode" value="heavy"><span>Heavy</span></label>
+    <label><input type="radio" name="motion-mode" value="playful"><span>Playful</span></label>
+    <label><input type="radio" name="motion-mode" value="custom"><span>Custom curve</span></label>
+   </fieldset>
+   <p id="lab-description" class="lab-description" aria-live="polite">Slow at the start, fast in the middle, soft at the end.</p>
+   <label class="control-label" for="duration">Move duration <output id="duration-value">2.0 s</output></label>
+   <input id="duration" type="range" min="0.6" max="4" step="0.1" value="2">
+   <div class="curve-panel">
+    <div class="curve-heading"><span>Position over time</span><button id="edit-curve" type="button">Edit curve</button><button id="reset-curve" type="button" hidden>Reset</button></div>
+    <svg id="curve-editor" viewBox="0 0 300 185" aria-label="Position over time; orange is selected motion, dashed gray is linear." aria-describedby="curve-help">
+     <path d="M25 20V140H280" fill="none" stroke="#b8b8b8"/>
+     <path d="M25 140L275 40" fill="none" stroke="#999" stroke-dasharray="4 5"/>
+     <text x="9" y="144">0</text><text x="9" y="44">1</text><text x="252" y="178">Time</text>
+     <g id="curve-handles" hidden>
+      <path id="handle-lines" fill="none" stroke="#b6321c" stroke-opacity=".45"/>
+      <circle class="curve-handle" id="handle-start" r="8" tabindex="0" role="button" aria-label="Start curve handle. Use arrow keys to adjust." aria-describedby="curve-help"/>
+      <circle class="curve-handle" id="handle-end" r="8" tabindex="0" role="button" aria-label="End curve handle. Use arrow keys to adjust." aria-describedby="curve-help"/>
+     </g>
+     <path id="motion-curve" fill="none" stroke="#e74429" stroke-width="2.5" pointer-events="none"/>
+     <circle id="curve-dot" r="4" fill="#151515" pointer-events="none"/>
+    </svg>
+    <p id="curve-help">Edit the curve to control how the orange ball speeds up and slows down.</p>
+    <details class="curve-values"><summary>Precise curve controls</summary><div>
+     <label for="handle-x1">Start time<input id="handle-x1" type="range" min="0" max="1" step="0.01" value="0.33"></label>
+     <label for="handle-y1">Start position<input id="handle-y1" type="range" min="-0.25" max="1.25" step="0.01" value="0"></label>
+     <label for="handle-x2">End time<input id="handle-x2" type="range" min="0" max="1" step="0.01" value="0.67"></label>
+     <label for="handle-y2">End position<input id="handle-y2" type="range" min="-0.25" max="1.25" step="0.01" value="1"></label>
+    </div></details>
+   </div>
+  </div>
+ </div>
+</section>
