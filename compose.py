@@ -87,5 +87,6 @@ for file,source in zip(module_paths,module_sources):
 js_version=hashlib.sha256((root/'dist/app.js').read_bytes()).hexdigest()[:12]
 page=re.sub(r'src="app\.js(?:\?[^" ]*)?"',f'src="app.js?v={js_version}"',page)
 page=re.sub(r'href="styles\.css(?:\?[^" ]*)?"',f'href="styles.css?v={css_version}"',page)
+page=page.replace('</head>', '<script defer src="fullscreen.js"></script></head>') if 'src="fullscreen.js"' not in page else page
 p.write_text(page,encoding='utf-8')
 print('Composed streamlined course with merged references and inline experiments.')
