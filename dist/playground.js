@@ -1,5 +1,5 @@
 import * as THREE from './assets/three.module.js';
-import {motionAt,clamp,bezierAt} from './motion.js?v=749a25a20b0f';
+import {motionAt,clamp,bezierAt} from './motion.js?v=f7b449157b5e';
 export function initPlayground({setupScene,lightStudio,observe,register,isPaused,resume,reduced}){
  const $=s=>document.querySelector(s),host=$('#lab-scene');if(!host)return;
  const descriptions={linear:'Equal distance every frame. The speed stays constant.',ease:'Slow at each end, fast in the middle. Watch it travel there and back.',anticipation:'A small pullback prepares the main action.',overshoot:'Pass the destination, then settle back.',heavy:'A slow start builds into a firm stop.',playful:'An arc, deformation, and overshoot give the object a lively character.',custom:'Your curve controls the orange ball. The gray reference stays linear.'};

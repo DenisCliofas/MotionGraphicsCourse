@@ -1,0 +1,907 @@
+[
+  {
+    "number": 1,
+    "title": "PART 3",
+    "texts": [
+      "PART 3",
+      "Blender Foundations",
+      "The goal is not to learn every button. The goal is to know the few Blender areas needed to build clean motion.",
+      "Blender Foundations",
+      "Enough Blender to start animating with intention."
+    ],
+    "media": [
+      "ppt/media/image1.png"
+    ]
+  },
+  {
+    "number": 2,
+    "title": "Blender UI: Windows & Editor Types",
+    "texts": [
+      "Blender UI: Windows & Editor Types",
+      "1. Viewport",
+      "Where you see and move objects.",
+      "2. Outliner",
+      "The list of everything in the scene.",
+      "3. Properties",
+      "Object, material, render, and camera settings.",
+      "4. Timeline",
+      "Where animation timing begins.",
+      "5. Top Bar",
+      "Provides access to main menus and workspace tab switching.",
+      "Blender Survival Map"
+    ],
+    "media": [
+      "ppt/media/image2.png"
+    ]
+  },
+  {
+    "number": 3,
+    "title": "Workspace: Layout",
+    "texts": [
+      "Workspace: Layout",
+      "Workspaces",
+      "Usage",
+      "Your main home base. Use this to move objects around, light your scene, and look at your project as a whole."
+    ],
+    "media": [
+      "ppt/media/image3.gif"
+    ]
+  },
+  {
+    "number": 4,
+    "title": "Workspace: Modeling",
+    "texts": [
+      "Workspace: Modeling",
+      "Workspaces",
+      "Usage",
+      "Use it to edit object shapes."
+    ],
+    "media": [
+      "ppt/media/image4.gif"
+    ]
+  },
+  {
+    "number": 5,
+    "title": "Workspace: Sculpting",
+    "texts": [
+      "Workspace: Sculpting",
+      "Workspaces",
+      "Usage",
+      "Turns your mouse into a clay tool. Use this to organically carve and shape details."
+    ],
+    "media": [
+      "ppt/media/image5.gif"
+    ]
+  },
+  {
+    "number": 6,
+    "title": "Workspace: UV Editing",
+    "texts": [
+      "Workspace: UV Editing",
+      "Workspaces",
+      "Usage",
+      "Used for unwrapping your 3D model like a cardboard box. This lets you flatten a 3D object into a 2D map so that flat image textures can wrap around it perfectly without stretching."
+    ],
+    "media": [
+      "ppt/media/image6.gif"
+    ]
+  },
+  {
+    "number": 7,
+    "title": "Workspace: Texture Painting",
+    "texts": [
+      "Workspace: Texture Painting",
+      "Workspaces",
+      "Usage",
+      "Allows you to paint directly onto your 3D models. It gives you brushes to draw colors, patterns, and details straight onto your object's surfaces."
+    ],
+    "media": [
+      "ppt/media/image7.gif"
+    ]
+  },
+  {
+    "number": 8,
+    "title": "Workspace: Shading",
+    "texts": [
+      "Workspace: Shading",
+      "Workspaces",
+      "Usage",
+      "The place where you give objects their material properties. It provides a visual grid (Shader Editor) where you link color, glossiness, and texture blocks together using a system called \"nodes\"."
+    ],
+    "media": [
+      "ppt/media/image8.gif"
+    ]
+  },
+  {
+    "number": 9,
+    "title": "Workspace: Animation",
+    "texts": [
+      "Workspace: Animation",
+      "Workspaces",
+      "Usage",
+      "Setup to make objects move over time. It splits your view so you can see your 3D scene alongside a timeline and a \"Dope Sheet\" to track your animation keyframes."
+    ],
+    "media": [
+      "ppt/media/image9.gif"
+    ]
+  },
+  {
+    "number": 10,
+    "title": "Workspace: Rendering",
+    "texts": [
+      "Workspace: Rendering",
+      "Workspaces",
+      "Usage",
+      "A dedicated screen to view and review your finished images. When you hit render, your final high-quality picture or movie clip appears here for inspection."
+    ],
+    "media": [
+      "ppt/media/image10.gif"
+    ]
+  },
+  {
+    "number": 11,
+    "title": "Workspace: Compositing",
+    "texts": [
+      "Workspace: Compositing",
+      "Workspaces",
+      "Usage",
+      "Used for post-processing and photo editing. After rendering, you use this node-based layout to tweak colors, add blur, create lens flares, or mix multiple images together before final export."
+    ],
+    "media": [
+      "ppt/media/image11.gif"
+    ]
+  },
+  {
+    "number": 12,
+    "title": "Workspace: Geometry Nodes",
+    "texts": [
+      "Workspace: Geometry Nodes",
+      "Workspaces",
+      "Usage",
+      "A modern space used to build objects procedurally with code-like blocks. Instead of modeling by hand, you connect nodes to generate landscapes, scatter instances (like grass on a hill), or build automated structures."
+    ],
+    "media": [
+      "ppt/media/image12.png"
+    ]
+  },
+  {
+    "number": 13,
+    "title": "Workspace: Scripting",
+    "texts": [
+      "Workspace: Scripting",
+      "Workspaces",
+      "Usage",
+      "Designed for coding and automation. It provides a text editor and a Python console for writing custom tools, plugins, or automated generation scripts."
+    ],
+    "media": [
+      "ppt/media/image13.gif"
+    ]
+  },
+  {
+    "number": 14,
+    "title": "Workspace: Customize",
+    "texts": [
+      "Workspace: Customize",
+      "Usage",
+      "You can switch any existing editor window in something else.",
+      "Outliner",
+      "Properties",
+      "3D Viewport",
+      "Timeline",
+      "UV Editor",
+      "Image Editor",
+      "Shader Editor",
+      "Dope Sheet",
+      "Workspaces"
+    ],
+    "media": [
+      "ppt/media/image14.gif"
+    ]
+  },
+  {
+    "number": 15,
+    "title": "Workspace: Customize",
+    "texts": [
+      "Workspace: Customize",
+      "Workspaces",
+      "Usage",
+      "You can spit any existing window in more sub-windows or opposite, reduce their amount by merging windows."
+    ],
+    "media": [
+      "ppt/media/image23.gif"
+    ]
+  },
+  {
+    "number": 16,
+    "title": "Viewport Navigation: Default Scene",
+    "texts": [
+      "Viewport Navigation: Default Scene",
+      "Navigation",
+      "Cube",
+      "Camera",
+      "Licht",
+      "Floor",
+      "X-Axis",
+      "Y-Axis",
+      "Tools",
+      "Info",
+      "Header",
+      "NavigationTools"
+    ],
+    "media": [
+      "ppt/media/image24.png"
+    ]
+  },
+  {
+    "number": 17,
+    "title": "Viewport Navigation: Navigation Tools",
+    "texts": [
+      "Viewport Navigation: Navigation Tools",
+      "Navigation"
+    ],
+    "media": [
+      "ppt/media/image25.gif"
+    ]
+  },
+  {
+    "number": 18,
+    "title": "Viewport Navigation: with Mouse and Keyboard",
+    "texts": [
+      "Viewport Navigation: with Mouse and Keyboard",
+      "Navigation"
+    ],
+    "media": [
+      "ppt/media/image26.gif"
+    ]
+  },
+  {
+    "number": 19,
+    "title": "Viewport Navigation: Re-focus View on Selected",
+    "texts": [
+      "Viewport Navigation: Re-focus View on Selected",
+      "Navigation"
+    ],
+    "media": [
+      "ppt/media/image27.png"
+    ]
+  },
+  {
+    "number": 20,
+    "title": "Objects Transformation: Object Selection",
+    "texts": [
+      "Objects Transformation: Object Selection",
+      "Object Transformation"
+    ],
+    "media": [
+      "ppt/media/image28.gif"
+    ]
+  },
+  {
+    "number": 21,
+    "title": "Objects Transformation: Select/Deselect All",
+    "texts": [
+      "Objects Transformation: Select/Deselect All",
+      "Object Transformation"
+    ],
+    "media": [
+      "ppt/media/image29.gif"
+    ]
+  },
+  {
+    "number": 22,
+    "title": "Objects Transformation: Transformation Widgets",
+    "texts": [
+      "Objects Transformation: Transformation Widgets",
+      "Object Transformation"
+    ],
+    "media": [
+      "ppt/media/image30.gif"
+    ]
+  },
+  {
+    "number": 23,
+    "title": "Objects Transformation: Object Properties",
+    "texts": [
+      "Objects Transformation: Object Properties",
+      "Object Transformation"
+    ],
+    "media": [
+      "ppt/media/image31.gif"
+    ]
+  },
+  {
+    "number": 24,
+    "title": "Objects Management: 3D Primitives",
+    "texts": [
+      "Objects Management: 3D Primitives",
+      "Objects Management"
+    ],
+    "media": [
+      "ppt/media/image32.png"
+    ]
+  },
+  {
+    "number": 25,
+    "title": "Objects Management: Copy / Paste / Delete Objects",
+    "texts": [
+      "Objects Management: Copy / Paste / Delete Objects",
+      "Objects Management",
+      "Right Click"
+    ],
+    "media": [
+      "ppt/media/image33.png",
+      "ppt/media/image34.png",
+      "ppt/media/image35.png",
+      "ppt/media/image36.png"
+    ]
+  },
+  {
+    "number": 26,
+    "title": "Objects Management: Shading Mode",
+    "texts": [
+      "Objects Management: Shading Mode",
+      "Objects Management",
+      "Shade Flat",
+      "Shade Smooth",
+      "Right Click"
+    ],
+    "media": [
+      "ppt/media/image37.gif",
+      "ppt/media/image38.png",
+      "ppt/media/image39.png"
+    ]
+  },
+  {
+    "number": 27,
+    "title": "Objects Management: Renaming",
+    "texts": [
+      "Objects Management: Renaming",
+      "Objects Management"
+    ],
+    "media": [
+      "ppt/media/image40.gif"
+    ]
+  },
+  {
+    "number": 28,
+    "title": "Objects Management: Parenting",
+    "texts": [
+      "Select Multiple Objects",
+      "Right Mouse Click",
+      "Objects Management: Parenting",
+      "Objects Management"
+    ],
+    "media": [
+      "ppt/media/image41.png",
+      "ppt/media/image42.png",
+      "ppt/media/image43.gif"
+    ]
+  },
+  {
+    "number": 29,
+    "title": "Objects Management: Collections",
+    "texts": [
+      "Select Objects",
+      "Right Mouse Click",
+      "Move to exitsing collection",
+      "or create a new one",
+      "Current collections",
+      "Objects Management: Collections",
+      "Objects Management"
+    ],
+    "media": [
+      "ppt/media/image44.png",
+      "ppt/media/image45.png",
+      "ppt/media/image46.png",
+      "ppt/media/image47.png",
+      "ppt/media/image48.png",
+      "ppt/media/image49.png"
+    ]
+  },
+  {
+    "number": 30,
+    "title": "Objects Management: Hide/Unhide Objects",
+    "texts": [
+      "Objects Management: Hide/Unhide Objects",
+      "Objects Management"
+    ],
+    "media": [
+      "ppt/media/image50.gif"
+    ]
+  },
+  {
+    "number": 31,
+    "title": "Objects Management: Duplication",
+    "texts": [
+      "Objects Management: Duplication",
+      "Objects Management",
+      "Duplicate",
+      "Duplicate Linked"
+    ],
+    "media": [
+      "ppt/media/image51.gif",
+      "ppt/media/image52.gif"
+    ]
+  },
+  {
+    "number": 32,
+    "title": "Mesh: What is a mesh?",
+    "texts": [
+      "Mesh: What is a mesh?",
+      "A mesh is a collection of vertices, edges, and faces that define the shape and structure of a three-dimensional object. [1] (https://www.selfcad.com/blog/what-is-a-3d-mesh)",
+      "VERTICES",
+      "EDGES",
+      "FACES",
+      "Mesh"
+    ],
+    "media": [
+      "ppt/media/image53.png",
+      "ppt/media/image54.png",
+      "ppt/media/image55.png"
+    ]
+  },
+  {
+    "number": 33,
+    "title": "Mesh: Edit-Mode",
+    "texts": [
+      "Mesh: Edit-Mode",
+      "Mesh",
+      "Edit Mode is used to shape and modify the actual geometry (the mesh) of a 3D object.",
+      "Shortcut: TAB"
+    ],
+    "media": [
+      "ppt/media/image56.gif"
+    ]
+  },
+  {
+    "number": 34,
+    "title": "Mesh: Select Elements",
+    "texts": [
+      "Mesh: Select Elements",
+      "Mesh",
+      "Shortcut: 1 \u2013 Vertices, 2 - Edges, 3 - Faces"
+    ],
+    "media": [
+      "ppt/media/image57.gif"
+    ]
+  },
+  {
+    "number": 35,
+    "title": "Mesh: Edge Loop / Edge Ring Selection",
+    "texts": [
+      "Mesh: Edge Loop / Edge Ring Selection",
+      "Mesh",
+      "Shortcut: ALT + Left mouse click in vertex or edge selection mode."
+    ],
+    "media": [
+      "ppt/media/image58.gif"
+    ]
+  },
+  {
+    "number": 36,
+    "title": "Mesh: Face Loop Selection",
+    "texts": [
+      "Mesh: Face Loop Selection",
+      "Mesh",
+      "Shortcut: ALT + Left mouse click in face selection mode."
+    ],
+    "media": [
+      "ppt/media/image59.gif"
+    ]
+  },
+  {
+    "number": 37,
+    "title": "Mesh: Shortest Path Selection",
+    "texts": [
+      "Mesh: Shortest Path Selection",
+      "Mesh",
+      "Shortcut: CTRL + Left mouse click."
+    ],
+    "media": [
+      "ppt/media/image60.gif"
+    ]
+  },
+  {
+    "number": 38,
+    "title": "Mesh: Remove Elements",
+    "texts": [
+      "Select Vertices / Edges or Faces you want to remove",
+      "Select what exactly you want to remove",
+      "Result of removing selected Face",
+      "Mesh: Remove Elements",
+      "Mesh",
+      "Shortcut: DELETE or X"
+    ],
+    "media": [
+      "ppt/media/image61.png",
+      "ppt/media/image62.png",
+      "ppt/media/image63.png"
+    ]
+  },
+  {
+    "number": 39,
+    "title": "Mesh: Remove Elements",
+    "texts": [
+      "Mesh: Remove Elements",
+      "Mesh",
+      "Shortcut: DELETE or X",
+      "Vertex Removal",
+      "Edge Removal",
+      "Face Removal"
+    ],
+    "media": [
+      "ppt/media/image64.gif",
+      "ppt/media/image65.gif",
+      "ppt/media/image66.gif"
+    ]
+  },
+  {
+    "number": 40,
+    "title": "Modeling: Extrude",
+    "texts": [
+      "Select Extrude Tool",
+      "Select Faces to extrude",
+      "Left Mouse Click, Hold and Move the \u00ab+\u00bb to extrude faces",
+      "Modeling: Extrude",
+      "Modeling",
+      "Shortcut: CTRL + Left mouse click."
+    ],
+    "media": [
+      "ppt/media/image67.png",
+      "ppt/media/image68.png",
+      "ppt/media/image69.gif"
+    ]
+  },
+  {
+    "number": 41,
+    "title": "Modeling: Loop Cut",
+    "texts": [
+      "Switch to Edit-Mode",
+      "Select Loop Cut Tool",
+      "Mouse over Object",
+      "Left Mouse Clickto create new Edge Loop",
+      "Left Mouse Click & Hold to slide the Edge Loop beforecreating it",
+      "Modeling: Loop Cut",
+      "Modeling",
+      "Shortcut: CTRL + R"
+    ],
+    "media": [
+      "ppt/media/image70.png",
+      "ppt/media/image71.png",
+      "ppt/media/image72.png",
+      "ppt/media/image73.png",
+      "ppt/media/image74.gif"
+    ]
+  },
+  {
+    "number": 42,
+    "title": "Modeling: Inset",
+    "texts": [
+      "Select Inset Tool",
+      "Select faces to inset",
+      "Left Mouse Click & Holdsomewhere at theedge of selectionand drag cursortowards the middle",
+      "Modeling: Inset",
+      "Modeling",
+      "Shortcut: I"
+    ],
+    "media": [
+      "ppt/media/image75.png",
+      "ppt/media/image76.png",
+      "ppt/media/image77.gif"
+    ]
+  },
+  {
+    "number": 43,
+    "title": "Modeling: Bevel",
+    "texts": [
+      "Switch to Edge Select Mode",
+      "Select Bevel Tool",
+      "Select Edges tobevel",
+      "Left Mouse Click &Hold on selectedEdge  and move Cursor away fromselection",
+      "Modeling: Bevel",
+      "Modeling",
+      "Shortcut: B"
+    ],
+    "media": [
+      "ppt/media/image78.png",
+      "ppt/media/image79.png",
+      "ppt/media/image80.gif",
+      "ppt/media/image81.gif"
+    ]
+  },
+  {
+    "number": 44,
+    "title": "Modeling: Knife",
+    "texts": [
+      "Select Knife Tool",
+      "Left Mouse Click somewhere on the Object to startcutting it. Click once moreto define the end of the cut.",
+      "Modeling: Knife",
+      "Modeling",
+      "Shortcut: K"
+    ],
+    "media": [
+      "ppt/media/image82.png",
+      "ppt/media/image83.gif"
+    ]
+  },
+  {
+    "number": 45,
+    "title": "Modeling: Create New Faces from Vertices",
+    "texts": [
+      "Modeling: Create New Faces from Vertices",
+      "Modeling",
+      "Shortcut: F"
+    ],
+    "media": [
+      "ppt/media/image84.gif"
+    ]
+  },
+  {
+    "number": 46,
+    "title": "Modeling: Merge Vertices",
+    "texts": [
+      "Modeling: Merge Vertices",
+      "Modeling",
+      "Shortcut: F"
+    ],
+    "media": [
+      "ppt/media/image85.gif"
+    ]
+  },
+  {
+    "number": 47,
+    "title": "Modeling: Connect Vertices",
+    "texts": [
+      "Modeling: Connect Vertices",
+      "Modeling",
+      "Shortcut: J"
+    ],
+    "media": [
+      "ppt/media/image86.gif"
+    ]
+  },
+  {
+    "number": 48,
+    "title": "Modeling: Subdivision",
+    "texts": [
+      "Modeling: Subdivision",
+      "Modeling"
+    ],
+    "media": [
+      "ppt/media/image87.gif"
+    ]
+  },
+  {
+    "number": 49,
+    "title": "Shading: What is shading?",
+    "texts": [
+      "Shading: What is shading?",
+      "Shading",
+      "Shading is the process of calculating how light interacts with the surfaces of 3D objects to create colors, highlights, and shadows.",
+      "3D cube with visible edges but no shading.",
+      "Same 3D cube but without visible edges and shading.",
+      "Same 3D cube with shading but no visible edges"
+    ],
+    "media": [
+      "ppt/media/image88.png",
+      "ppt/media/image89.png",
+      "ppt/media/image90.png"
+    ]
+  },
+  {
+    "number": 50,
+    "title": "Shading: PBR (Principled BSDF Shader)",
+    "texts": [
+      "Shading: PBR (Principled BSDF Shader)",
+      "Shading",
+      "PBR (Physically Based Rendering or Shading) is a computer graphics method that models how light behaves in the real world to create realistic and consistent materials.",
+      "Diffuse Reflection",
+      "Specular Reflection"
+    ],
+    "media": [
+      "ppt/media/image91.png",
+      "ppt/media/image92.png"
+    ]
+  },
+  {
+    "number": 51,
+    "title": "Shading: Metallics or Non-Metallics",
+    "texts": [
+      "Shading: Metallics or Non-Metallics",
+      "Shading",
+      "Metallics have no diffuse reflection (their diffusion is always black), their color is coming from specular reflection.",
+      "Non-Metallics have strong diffuse reflection and carry only very weak specular reflection.",
+      "In PBR however both diffuse and specular reflection are cominb from base color property.",
+      "To simplify everything for you, the Metallic property should almost always be treated as a binary switch: 0 (non-metal/dielectric) or 1 (metal). This will tell shader how to interpret the base color corectly."
+    ],
+    "media": [
+      "ppt/media/image93.png",
+      "ppt/media/image94.png",
+      "ppt/media/image95.jpg",
+      "ppt/media/image96.png"
+    ]
+  },
+  {
+    "number": 52,
+    "title": "Shading: Roughness",
+    "texts": [
+      "Shading: Roughness",
+      "Shading",
+      "Every surface has micro-reliefs, such as pores or scratches. All of this causes the effect of surface roughness. If the surface is perfectly smooth, then the reflection is perfectly clear and distinct.",
+      "Roughness Intensity"
+    ],
+    "media": [
+      "ppt/media/image97.png",
+      "ppt/media/image98.png",
+      "ppt/media/image99.png",
+      "ppt/media/image100.png",
+      "ppt/media/image101.png"
+    ]
+  },
+  {
+    "number": 53,
+    "title": "Shading: Specular",
+    "texts": [
+      "Shading: Specular",
+      "Shading",
+      "As previously mentioned, non-metallics also have a weak specular reflection (around 0-8%). This information is not stored in the metallic map or base color and can be controlled using the specular map.",
+      "Specular Intesity",
+      "So don\u2019t use metallic property to control reflections of the Non-Metallic surfaces, use specular property instead."
+    ],
+    "media": [
+      "ppt/media/image102.png",
+      "ppt/media/image103.png",
+      "ppt/media/image104.png",
+      "ppt/media/image105.png"
+    ]
+  },
+  {
+    "number": 54,
+    "title": "Shading: How to create/remove shaders?",
+    "texts": [
+      "Shading: How to create/remove shaders?",
+      "Shading"
+    ],
+    "media": [
+      "ppt/media/image106.gif"
+    ]
+  },
+  {
+    "number": 55,
+    "title": "Shading: How to edit shaders?",
+    "texts": [
+      "Shading: How to edit shaders?",
+      "Shading"
+    ],
+    "media": [
+      "ppt/media/image107.gif"
+    ]
+  },
+  {
+    "number": 56,
+    "title": "Shading: How to add more materials to one mesh?",
+    "texts": [
+      "Shading: How to add more materials to one mesh?",
+      "Shading"
+    ],
+    "media": [
+      "ppt/media/image108.gif"
+    ]
+  },
+  {
+    "number": 57,
+    "title": "Animation: Automatic keyframe creation?",
+    "texts": [
+      "Animation: Automatic keyframe creation?",
+      "Animation"
+    ],
+    "media": [
+      "ppt/media/image109.gif"
+    ]
+  },
+  {
+    "number": 58,
+    "title": "Animation: Manual keyframe creation?",
+    "texts": [
+      "Animation: Manual keyframe creation?",
+      "Animation"
+    ],
+    "media": [
+      "ppt/media/image110.gif"
+    ]
+  },
+  {
+    "number": 59,
+    "title": "Animation: Framerate Settings",
+    "texts": [
+      "Animation: Framerate Settings",
+      "Animation"
+    ],
+    "media": [
+      "ppt/media/image111.gif"
+    ]
+  },
+  {
+    "number": 60,
+    "title": "Animation: Keyframe Adaptation/Duplication/Removal",
+    "texts": [
+      "Animation: Keyframe Adaptation/Duplication/Removal",
+      "Animation"
+    ],
+    "media": [
+      "ppt/media/image112.gif"
+    ]
+  },
+  {
+    "number": 61,
+    "title": "Animation: Keyframe Anything",
+    "texts": [
+      "Animation: Keyframe Anything",
+      "Animation"
+    ],
+    "media": [
+      "ppt/media/image113.gif"
+    ]
+  },
+  {
+    "number": 62,
+    "title": "Animation: Keyframe Anything",
+    "texts": [
+      "Animation: Keyframe Anything",
+      "Animation",
+      "Lights",
+      "Camera",
+      "Textures",
+      "Particles",
+      "Modifiers",
+      "Materials"
+    ],
+    "media": [
+      "ppt/media/image114.gif",
+      "ppt/media/image115.gif",
+      "ppt/media/image116.gif",
+      "ppt/media/image117.gif",
+      "ppt/media/image118.gif",
+      "ppt/media/image119.gif"
+    ]
+  },
+  {
+    "number": 63,
+    "title": "Animation: Keyframes Interpolation",
+    "texts": [
+      "Animation: Keyframes Interpolation",
+      "Animation",
+      "Bezier",
+      "Linear",
+      "Constant"
+    ],
+    "media": [
+      "ppt/media/image120.gif",
+      "ppt/media/image121.gif",
+      "ppt/media/image122.gif",
+      "ppt/media/image123.gif"
+    ]
+  },
+  {
+    "number": 64,
+    "title": "Animation: Follow Path",
+    "texts": [
+      "Animation: Follow Path",
+      "Animation"
+    ],
+    "media": [
+      "ppt/media/image124.gif"
+    ]
+  },
+  {
+    "number": 65,
+    "title": "Animation: Track To",
+    "texts": [
+      "Animation: Track To",
+      "Animation"
+    ],
+    "media": [
+      "ppt/media/image125.gif"
+    ]
+  }
+]

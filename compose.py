@@ -76,6 +76,7 @@ navigation=[('#slide-1','Overview'),('#slide-5','Observe'),('#slide-20','Underst
 navigation_links=''.join(f'<a href="{target}">{label}</a>' for target,label in navigation)
 page=re.sub(r'<nav class="topnav" aria-label="Course navigation">.*?</nav>',f'<nav class="topnav" aria-label="Course navigation">{navigation_links}</nav>',page)
 page=re.sub(r'<nav aria-label="Chapters">.*?</nav>',f'<nav aria-label="Chapters">{navigation_links}</nav>',page)
+page=re.sub(r'<details class="contents">.*?</details>', '<a class="part-link" href="foundation.html">Part 2 ↗</a>',page)
 css_version=hashlib.sha256((root/'dist/styles.css').read_bytes()).hexdigest()[:12]
 module_paths=[root/'dist'/name for name in ('app.js','motion.js','learning.js','playground.js')]
 module_sources=[re.sub(r'\.js\?v=[a-f0-9]+','.js',file.read_text(encoding='utf-8')) for file in module_paths]
