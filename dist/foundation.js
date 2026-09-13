@@ -1,3 +1,4 @@
+import {initShading} from './shading.js?v=vertexnormals2';
 import {initRoughness} from './roughness.js?v=combined5';
 import {initFoundationHero} from './foundation-hero.js';
 const reduced=matchMedia('(prefers-reduced-motion: reduce)'),videos=[...document.querySelectorAll('video')],visible=new Set();let paused=reduced.matches;
@@ -41,7 +42,7 @@ addEventListener('load',()=>{if(!jumpTarget&&location.hash)jumpTarget=document.g
 addEventListener('popstate',()=>{jumpTarget=location.hash?document.getElementById(location.hash.slice(1)):null;scheduleAlignment();});
 
 // Procedural demonstrations advance one image at a time.
-for(const number of [28,29,38,40,41,42,43,44]){
+for(const number of [25,28,29,38,40,41,42,43,44]){
  const lesson=document.getElementById(`foundation-${number}`),grid=lesson?.querySelector('.foundation-media');
  if(!grid||grid.children.length<2)continue;
  const frames=[...grid.children];let step=0;
@@ -49,13 +50,21 @@ for(const number of [28,29,38,40,41,42,43,44]){
  const controls=document.createElement('div');controls.className='sequence-controls';
  const back=document.createElement('button');back.type='button';back.textContent='← Back';
  const status=document.createElement('span');status.setAttribute('aria-live','polite');
- const next=document.createElement('button');next.type='button';
+ const next=document.createElement('button');next.type='button';next.className='primary-action';
+ const caption=document.createElement('p');caption.className='step-caption';caption.setAttribute('aria-live','polite');grid.before(caption);
  controls.append(back,status,next);grid.after(controls);
  const hint=document.createElement('p');hint.className='sequence-hint';hint.textContent='Click the image to continue.';grid.before(hint);
- function show(){frames.forEach((frame,i)=>{frame.hidden=i!==step;frame.querySelectorAll('video').forEach(v=>{if(i!==step){visible.delete(v);v.pause();}});});status.textContent=`Step ${step+1} of ${frames.length}`;back.disabled=step===0;next.textContent=step===frames.length-1?'Start again ↺':'Next →';frames[step].querySelector('button.sequence-image')?.setAttribute('aria-label',step===frames.length-1?'Start this demonstration again':`Show step ${step+2}`);}
+ function show(){frames.forEach(frame=>{const cue=frame.querySelector('.sequence-cue');if(cue)cue.textContent=step===frames.length-1?'Start again ↺':'Next step →';});caption.textContent=frames[step].dataset.caption||'';frames.forEach((frame,i)=>{frame.hidden=i!==step;frame.querySelectorAll('video').forEach(v=>{if(i!==step){visible.delete(v);v.pause();}});});status.textContent=`Step ${step+1} of ${frames.length}`;back.disabled=step===0;next.textContent=step===frames.length-1?'Start again ↺':'Next →';frames[step].querySelector('button.sequence-image')?.setAttribute('aria-label',step===frames.length-1?'Start this demonstration again':`Show step ${step+2}`);}
  function advance(){step=(step+1)%frames.length;show();}
- frames.forEach(frame=>{const img=frame.querySelector('img');if(img){const button=document.createElement('button');button.type='button';button.className='sequence-image';img.replaceWith(button);button.append(img);button.addEventListener('click',advance);}else hint.textContent='Use Next to continue through the demonstration.';});
+ frames.forEach(frame=>{const img=frame.querySelector('img');if(img){const button=document.createElement('button');button.type='button';button.className='sequence-image';img.replaceWith(button);button.append(img);const cue=document.createElement('span');cue.className='sequence-cue';cue.setAttribute('aria-hidden','true');button.append(cue);button.addEventListener('click',advance);}else hint.textContent='Use Next to continue through the demonstration.';});
  back.addEventListener('click',()=>{step=Math.max(0,step-1);show();});next.addEventListener('click',advance);show();
 }
 
 initRoughness();
+
+for(const frame of document.querySelectorAll('.foundation-frame[data-caption]')){
+ if(frame.closest('.step-sequence'))continue;
+ const figure=document.createElement('figure');figure.className='captioned-example';frame.replaceWith(figure);figure.append(frame);const caption=document.createElement('figcaption');caption.textContent=frame.dataset.caption;figure.append(caption);
+}
+
+initShading();

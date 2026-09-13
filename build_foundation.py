@@ -1,3 +1,4 @@
+from foundation_copy import CAPTIONS, INSTRUCTIONS
 from pathlib import Path
 import hashlib
 import zipfile,xml.etree.ElementTree as E,posixpath,json,re,subprocess,concurrent.futures,io
@@ -44,12 +45,16 @@ for slide in slides:
  if i==49:texts=['Compare the same cube with edges only, a flat surface, and shading.']
  if i==41:texts=['Follow the steps to add a loop cut and slide it into position.']
  if i==63:texts=['Compare Bezier, Linear, and Constant interpolation.']
+ if i in INSTRUCTIONS:texts=[INSTRUCTIONS[i]]
  visuals=[]
  for name in slide['media']:
   a=mapping[name];label=h(title,quote=True)
   if a['animated']:visuals.append(f'<video controls muted loop playsinline preload="none" poster="{a["poster"]}" data-src="{a["src"]}" aria-label="{label} demonstration" width="{a["width"]}" height="{a["height"]}"></video>')
   else:visuals.append(f'<img loading="lazy" src="{a["src"]}" alt="{label} — Blender demonstration" width="{a["width"]}" height="{a["height"]}">')
  visuals=[f'<div class="foundation-frame" style="aspect-ratio:{mapping[name]["width"]}/{mapping[name]["height"]}">{visual}</div>' for name,visual in zip(slide['media'],visuals)]
+ if i in CAPTIONS:
+  assert len(CAPTIONS[i])==len(visuals),(i,len(visuals))
+  visuals=[v.replace('<div class="foundation-frame"',f'<div data-caption="{h(c,quote=True)}" class="foundation-frame"') for v,c in zip(visuals,CAPTIONS[i])]
  anchor=f'<span id="{group[1]}" class="chapter-anchor"></span>' if i==group[0] else ''
  sections.append(f'<section class="lesson foundation-lesson" id="foundation-{i}" data-group="{group[1]}">{anchor}<div class="lesson-top"><span class="eyebrow">Part 2 / {group[2]}</span></div><h2>{h(title)}</h2>'+''.join(f'<p class="lead">{h(t)}</p>' for t in texts)+f'<div class="foundation-media media-count-{len(visuals)}" style="--media-columns:{min(3,len(visuals))}">'+''.join(visuals)+'</div></section>')
 
@@ -128,6 +133,10 @@ for section in rebuilt:
   combined.append('<section class="lesson foundation-lesson foundation-detail" id="foundation-51" data-group="materials"><span id="foundation-52"></span><span id="foundation-53"></span><h3>Explore one material.</h3><p class="lead">Change the surface. Keep the room and lighting fixed.</p><div class="roughness-demo combined-material"><div id="material-scene" class="material-scene"><canvas role="img" aria-label="Interactive material sphere. Drag to rotate."></canvas></div><div class="material-panel">'+controls+'<p id="material-help" class="material-note">Drag the sphere to inspect its reflections.</p></div></div></section>')
 rebuilt=combined
 
+for j,section in enumerate(rebuilt):
+ if 'id="foundation-26"' in section:
+  start=section.index('<div class="foundation-media')
+  rebuilt[j]=section[:start]+'<div class="roughness-demo"><div class="material-scene" id="shading-scene"><canvas role="img" aria-label="Flat and smooth shading comparison. Drag or use arrow keys to rotate."></canvas><span class="material-drag-hint">Drag to rotate</span></div><div><fieldset class="mode-controls"><legend>Surface shading</legend><label><input type="radio" name="surface-shading" value="flat" checked><span>Flat</span></label><label><input type="radio" name="surface-shading" value="smooth"><span>Smooth</span></label></fieldset><p id="shading-description" class="lead" aria-live="polite">Each face has a single normal, so the individual faces remain visible.</p><button type="button" class="arc-reset" id="show-shading-normals" aria-pressed="false">Show normals</button><p class="material-note">Normals at vertices: Flat keeps a separate direction for each adjoining face. Smooth shares a direction across adjoining faces. Orange arrows show the split or shared directions.</p></div></div></section>'
 sections=rebuilt
 
 index=(out/'index.html').read_text(encoding='utf-8');head=index.split('<body>')[0];head=re.sub(r'<title>.*?</title>','<title>Part 2 — Blender Foundations</title>',head);head=re.sub(r'<script.*?</script>','<script type="module" src="foundation.js"></script>',head)

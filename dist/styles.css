@@ -112,3 +112,25 @@
 .material-panel{display:grid;gap:22px}.material-control{display:grid;grid-template-columns:1fr auto;gap:10px}.material-control input[type=range],.material-control p{grid-column:1/-1}.material-control input[type=range]{width:100%;accent-color:#ff5a3d}.material-control input[type=color]{width:54px;height:34px;border:1px solid #dedede;border-radius:6px;padding:3px;background:white;cursor:pointer}.material-control p,.material-note{font-size:14px;line-height:1.5;color:#626262;margin:0}.material-control.inactive{opacity:.5}.combined-material .material-scene{height:clamp(320px,42vw,560px)}
 
 .fullscreen-toggle{border:1px solid #dedede;background:white;border-radius:50%;width:44px;height:44px;flex-shrink:0;font-size:25px;display:grid;place-items:center}.fullscreen-toggle:hover{border-color:#ff5a3d;color:#b6321c}.fullscreen-status:empty{display:none}.fullscreen-status{position:absolute;right:4.5%;top:100%;max-width:340px;padding:16px;background:white;border:1px solid #dedede;border-radius:10px;font-size:14px;box-shadow:0 8px 24px #0001}.fullscreen-status a{text-decoration:underline}html:fullscreen{background:white;overflow-y:auto}
+
+.step-caption{font-size:clamp(18px,1.7vw,24px);line-height:1.5;margin:16px 0;color:#151515}.captioned-example{margin:0;min-width:0}.captioned-example figcaption{font-size:15px;line-height:1.5;margin-top:12px;color:#626262}
+
+/* Shared interaction language: dark actions, orange selection, generous targets. */
+button:not(.sequence-image),.mode-controls label span{min-height:44px}
+button:not(.sequence-image):not(:disabled){font-weight:600}
+.sequence-controls button,.mini-pause,.prediction-start,.prediction-choices button,#lab-play,#edit-curve,#reset-curve,.arc-reset{padding:12px 20px;border:1px solid #9a9a9a;border-radius:12px;background:#fff;color:#151515}
+.sequence-controls .primary-action,.mini-pause,.prediction-start,#lab-play{background:#151515;color:#fff;border-color:#151515}
+.sequence-controls .primary-action:hover,.mini-pause:hover,.prediction-start:hover,#lab-play:hover{background:#333;border-color:#333;color:#fff}
+button:disabled{cursor:not-allowed;opacity:.4}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #b6321c;outline-offset:4px}
+.mode-controls{display:flex;flex-wrap:wrap;gap:8px}.mode-controls label{cursor:pointer}.mode-controls label span{display:inline-flex;align-items:center;justify-content:center;padding:12px 20px;border:1px solid #999;background:#fff;color:#151515;border-radius:12px;font-weight:600}
+.mode-controls input:checked+span{background:#b6321c;color:white;border-color:#b6321c;box-shadow:inset 0 0 0 1px #b6321c}.mode-controls input:focus-visible+span{outline:3px solid #151515;outline-offset:3px}.mode-controls label:hover span{border-color:#b6321c}.mode-controls input:disabled+span{opacity:.4;cursor:not-allowed}
+#show-shading-normals{display:inline-flex;align-items:center;gap:12px;margin:16px 0;color:#151515;border-color:#999;background:white}
+#show-shading-normals::before{content:'OFF';font-size:11px;font-weight:750;letter-spacing:.06em;background:#e7e7e7;color:#444;padding:6px 9px;border-radius:99px}
+#show-shading-normals[aria-pressed=true]{border-color:#b6321c;background:#fff4f0;color:#8e2818}#show-shading-normals[aria-pressed=true]::before{content:'ON';background:#b6321c;color:white}
+.sequence-cue{position:absolute;right:16px;bottom:16px;display:inline-flex;align-items:center;min-height:44px;padding:12px 18px;border-radius:12px;background:#151515;color:white;font-size:15px;font-weight:650;box-shadow:0 3px 12px #0003;pointer-events:none;transition:background .2s}
+.sequence-image:hover .sequence-cue{background:#b6321c}.sequence-image:focus-visible{outline:3px solid #b6321c;outline-offset:-4px}.sequence-controls{gap:18px}.sequence-controls>span{font-weight:600;color:#444;min-width:92px;text-align:center}
+.workspace-reference summary,.mini-experiment summary,.film-observations summary{min-height:52px;font-weight:650;cursor:pointer}.workspace-reference summary:hover,.mini-experiment summary:hover,.film-observations summary:hover{color:#b6321c;background:#f5f5f5}
+.trails-control label{display:inline-flex;align-items:center;gap:10px;min-height:44px;cursor:pointer}.trails-control input[type=checkbox]{width:20px;height:20px;accent-color:#b6321c}
+@media(max-width:600px){.sequence-cue{right:10px;bottom:10px;font-size:13px;padding:10px 13px}.sequence-controls{gap:10px}.sequence-controls button{padding:10px 15px}}
+@media(prefers-reduced-motion:reduce){.sequence-cue{transition:none}}
