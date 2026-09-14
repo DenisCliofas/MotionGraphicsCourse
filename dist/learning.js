@@ -1,4 +1,4 @@
-import {diagramAt,clamp} from './motion.js?v=f7b449157b5e';
+import {diagramAt,clamp} from './motion.js?v=bf9850909252';
 
 export function initLearning({observe,register,isPaused,resume}){
  for(const experiment of document.querySelectorAll('.mini-experiment')){

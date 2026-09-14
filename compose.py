@@ -78,11 +78,11 @@ page=re.sub(r'<nav class="topnav" aria-label="Course navigation">.*?</nav>',f'<n
 page=re.sub(r'<nav aria-label="Chapters">.*?</nav>',f'<nav aria-label="Chapters">{navigation_links}</nav>',page)
 page=re.sub(r'<details class="contents">.*?</details>', '<a class="part-link" href="foundation.html">Part 2 ↗</a>',page)
 css_version=hashlib.sha256((root/'dist/styles.css').read_bytes()).hexdigest()[:12]
-module_paths=[root/'dist'/name for name in ('app.js','motion.js','learning.js','playground.js')]
-module_sources=[re.sub(r'\.js\?v=[a-f0-9]+','.js',file.read_text(encoding='utf-8')) for file in module_paths]
+module_paths=[root/'dist'/name for name in ('app.js','motion.js','learning.js','playground.js','wood-study.js')]
+module_sources=[re.sub(r"\.js\?v=[^\'\"\s]+",'.js',file.read_text(encoding='utf-8')) for file in module_paths]
 module_version=hashlib.sha256(''.join(module_sources).encode()).hexdigest()[:12]
 for file,source in zip(module_paths,module_sources):
- source=re.sub(r"from '(\./(?:motion|learning|playground)\.js)'",lambda m:f"from '{m[1]}?v={module_version}'",source)
+ source=re.sub(r"from '(\./(?:motion|learning|playground|wood-study)\.js)'",lambda m:f"from '{m[1]}?v={module_version}'",source)
  file.write_text(source,encoding='utf-8')
 js_version=hashlib.sha256((root/'dist/app.js').read_bytes()).hexdigest()[:12]
 page=re.sub(r'src="app\.js(?:\?[^" ]*)?"',f'src="app.js?v={js_version}"',page)

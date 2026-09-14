@@ -1,6 +1,7 @@
+import {buildWoodStudy} from './wood-study.js?v=bf9850909252';
 import * as THREE from './assets/three.module.js';
-import {initPlayground} from './playground.js?v=f7b449157b5e';
-import {initLearning} from './learning.js?v=f7b449157b5e';
+import {initPlayground} from './playground.js?v=bf9850909252';
+import {initLearning} from './learning.js?v=bf9850909252';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 let paused=reduced.matches, scenes=[],last=performance.now(),heroTime=0;
@@ -20,54 +21,10 @@ function setupScene(host,scale=6){const canvas=host.querySelector('canvas');cons
 function material(color){return new THREE.MeshStandardMaterial({color,roughness:.36,metalness:.12});}
 function roundedCube(size,mat){const r=.075,s=size/2-r;const shape=new THREE.Shape();shape.moveTo(-s,-s);shape.lineTo(s,-s);shape.lineTo(s,s);shape.lineTo(-s,s);shape.closePath();const geo=new THREE.ExtrudeGeometry(shape,{depth:size-2*r,bevelEnabled:true,bevelSegments:3,steps:1,bevelSize:r,bevelThickness:r});geo.center();const mesh=new THREE.Mesh(geo,mat);mesh.castShadow=true;mesh.receiveShadow=true;return mesh;}
 try{
- const s=setupScene($('#hero-scene'),4.4),group=new THREE.Group();s.scene.add(group);
- s.renderer.toneMappingExposure=1.05;
- const black=new THREE.MeshPhysicalMaterial({color:0x30343c,roughness:.25,metalness:.35,clearcoat:.65});
- const porcelain=new THREE.MeshPhysicalMaterial({color:0xe5e8ed,roughness:.26,metalness:.08,clearcoat:.8});
- const orange=new THREE.MeshPhysicalMaterial({color:0xff5026,roughness:.2,metalness:.2,clearcoat:1});
- const objects=[],radius=1.8;
- // The inner orbit clears the full footprint of every outer object.
- for(let i=0;i<6;i++){
-  const angle=i/6*Math.PI*2;
-  const obj=i%2===0?roundedCube(1.04,black):new THREE.Mesh(new THREE.CylinderGeometry(.51,.51,.97,64),porcelain);
-  obj.position.set(Math.cos(angle)*2.9,.54,Math.sin(angle)*2.9);obj.castShadow=true;obj.receiveShadow=true;group.add(obj);objects.push(obj);
-  const base=new THREE.Mesh(new THREE.CylinderGeometry(.7,.74,.07,64),new THREE.MeshStandardMaterial({color:0xe7e9ed,roughness:.55,metalness:.2}));
-  base.position.set(obj.position.x,.015,obj.position.z);base.receiveShadow=true;group.add(base);
- }
- for(const r of [radius-.06,radius+.06]){
-  const ring=new THREE.Mesh(new THREE.RingGeometry(r-.008,r+.008,160),new THREE.MeshBasicMaterial({color:0xc5cbd2,side:THREE.DoubleSide}));ring.rotation.x=-Math.PI/2;ring.position.y=.012;group.add(ring);
- }
- const pulse=new THREE.Mesh(new THREE.SphereGeometry(.22,40,28),orange);pulse.castShadow=true;group.add(pulse);
- // A continuous tapered ribbon follows the sphere, fading into the orbit.
- const count=80,positions=new Float32Array((count+1)*6),colors=new Float32Array((count+1)*6),indices=[];
- for(let i=0;i<=count;i++){
-  const color=new THREE.Color(0xff602e).lerp(new THREE.Color(0xffffff),i/count);
-  for(let j=0;j<2;j++)color.toArray(colors,i*6+j*3);
-  if(i<count){const k=i*2;indices.push(k,k+1,k+2,k+1,k+3,k+2);}
- }
- const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(positions,3).setUsage(THREE.DynamicDrawUsage));geo.setAttribute('color',new THREE.BufferAttribute(colors,3));geo.setIndex(indices);
- const ribbon=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({vertexColors:true,side:THREE.DoubleSide,transparent:true,opacity:.75,depthWrite:false}));ribbon.frustumCulled=false;group.add(ribbon);
- let drag=false,px=0,rotation=0;const canvas=s.renderer.domElement;
- canvas.addEventListener('pointerdown',e=>{drag=true;px=e.clientX;canvas.setPointerCapture(e.pointerId);});
- canvas.addEventListener('pointermove',e=>{if(drag){rotation+=(e.clientX-px)*.008;px=e.clientX;}});
- for(const event of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(event,()=>drag=false);
- s.update=dt=>{
-  if(!paused)heroTime=(heroTime+dt)%10;
-  const a=heroTime/10*Math.PI*2;group.rotation.y+=(rotation-group.rotation.y)*.12;
-  pulse.position.set(Math.cos(a)*radius,.25,Math.sin(a)*radius);
-  for(let i=0;i<=count;i++){
-   const angle=a-.10-i/count*1.15,half=.075*(1-i/count);
-   for(let j=0;j<2;j++){const r=radius+(j?half:-half),offset=i*6+j*3;positions[offset]=Math.cos(angle)*r;positions[offset+1]=.045;positions[offset+2]=Math.sin(angle)*r;}
-  }
-  geo.attributes.position.needsUpdate=true;
-  objects.forEach((obj,i)=>{
-   const lag=((a-i/6*Math.PI*2)%(Math.PI*2)+Math.PI*2)%(Math.PI*2);
-   const bounce=lag<1?Math.sin(lag*Math.PI)**2*.32:0;
-   obj.position.y=.54+bounce;obj.rotation.z=i%2===0?bounce*.12:0;
-  });
-  $('#loop-time').textContent=heroTime.toFixed(1).padStart(4,'0');$('#relay-progress').style.width=heroTime*10+'%';
- };scenes.push(s);
-}catch(e){console.warn('3D preview unavailable; showing the course illustration.',e);$('.drag-hint').textContent='Kinetic Relay · course illustration';}
+ const s=setupScene($('#hero-scene'),3.65);s.camera.position.set(5,5,9);s.camera.lookAt(0,1.5,0);
+ s.update=()=>{};
+ buildWoodStudy(s,()=>paused).then(()=>scenes.push(s)).catch(error=>{s.host.classList.remove('ready');console.warn('Wood study unavailable',error);});
+}catch(error){console.warn('Header preview unavailable',error);}
 
 function frame(now){const dt=Math.min((now-last)/1000,.05);last=now;if(!document.hidden)for(const s of scenes){if(visible.has(s.host)){s.update(dt);s.renderer.render(s.scene,s.camera);}}requestAnimationFrame(frame);}requestAnimationFrame(frame);
 // LAB_IMPLEMENTATION
