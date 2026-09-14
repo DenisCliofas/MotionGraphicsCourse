@@ -1,14 +1,14 @@
-import {buildWoodStudy} from './wood-study.js?v=bf9850909252';
+import {buildWoodStudy} from './wood-study.js?v=f1b4f4e0198c';
 import * as THREE from './assets/three.module.js';
-import {initPlayground} from './playground.js?v=bf9850909252';
-import {initLearning} from './learning.js?v=bf9850909252';
+import {initPlayground} from './playground.js?v=f1b4f4e0198c';
+import {initLearning} from './learning.js?v=f1b4f4e0198c';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
-let paused=reduced.matches, scenes=[],last=performance.now(),heroTime=0;
+let paused=false, scenes=[],last=performance.now(),heroTime=0;
 const visible=new Set();
 const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)visible.add(e.target);else visible.delete(e.target);if(e.target.tagName==='VIDEO'){if(e.isIntersecting){if(!e.target.src){e.target.src=e.target.dataset.src;e.target.load();}if(!paused&&!e.target.dataset.userPaused)e.target.play().catch(()=>{});}else e.target.pause();}}),{rootMargin:'0px',threshold:.08});
-function syncPause(){document.body.classList.toggle('motion-paused',paused);$('#motion-toggle').setAttribute('aria-pressed',String(paused));$('#motion-toggle').innerHTML=paused?'Resume motion <span aria-hidden="true">▶</span>':'Pause motion <span aria-hidden="true">Ⅱ</span>';$$('video').forEach(v=>{if(paused)v.pause();else if(visible.has(v)&&!v.dataset.userPaused)v.play().catch(()=>{});});}
-$('#motion-toggle').addEventListener('click',()=>{paused=!paused;syncPause();});reduced.addEventListener('change',()=>{paused=reduced.matches;syncPause();});syncPause();
+function syncPause(){document.body.classList.toggle('motion-paused',paused);$$('video').forEach(v=>{if(paused)v.pause();else if(visible.has(v)&&!v.dataset.userPaused)v.play().catch(()=>{});});}
+syncPause();
 $$('video').forEach(v=>{observer.observe(v);v.addEventListener('pause',()=>{if(!paused&&visible.has(v)&&!document.hidden)v.dataset.userPaused='1';});v.addEventListener('play',()=>{delete v.dataset.userPaused;});});
 $$('.film-play').forEach(button=>button.addEventListener('click',()=>{const host=button.closest('.film');const iframe=document.createElement('iframe');iframe.src=`https://www.youtube-nocookie.com/embed/${host.dataset.videoId}?autoplay=1&rel=0`;iframe.title=button.getAttribute('aria-label');iframe.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';iframe.allowFullscreen=true;iframe.referrerPolicy='strict-origin-when-cross-origin';host.replaceChildren(iframe);}));
 $$('.contents a').forEach(a=>a.addEventListener('click',()=>($('.contents')||{}).open=false));document.addEventListener('click',e=>{if(!e.target.closest('.contents'))($('.contents')||{}).open=false;});document.addEventListener('keydown',e=>{if(e.key==='Escape')($('.contents')||{}).open=false;});

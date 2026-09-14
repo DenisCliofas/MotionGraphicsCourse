@@ -77,6 +77,11 @@ navigation_links=''.join(f'<a href="{target}">{label}</a>' for target,label in n
 page=re.sub(r'<nav class="topnav" aria-label="Course navigation">.*?</nav>',f'<nav class="topnav" aria-label="Course navigation">{navigation_links}</nav>',page)
 page=re.sub(r'<nav aria-label="Chapters">.*?</nav>',f'<nav aria-label="Chapters">{navigation_links}</nav>',page)
 page=re.sub(r'<details class="contents">.*?</details>', '<a class="part-link" href="foundation.html">Part 2 ↗</a>',page)
+page=re.sub(r'<button[^>]*id="motion-toggle".*?</button>', '', page)
+from build_language import build as build_language, script_tag
+build_language()
+page=re.sub(r'<script[^>]*src="language.js[^"]*"[^>]*></script>', '', page)
+page=page.replace('</head>', script_tag()+'</head>')
 css_version=hashlib.sha256((root/'dist/styles.css').read_bytes()).hexdigest()[:12]
 module_paths=[root/'dist'/name for name in ('app.js','motion.js','learning.js','playground.js','wood-study.js')]
 module_sources=[re.sub(r"\.js\?v=[^\'\"\s]+",'.js',file.read_text(encoding='utf-8')) for file in module_paths]

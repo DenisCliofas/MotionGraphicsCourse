@@ -1,12 +1,11 @@
 import {initShading} from './shading.js?v=vertexnormals2';
 import {initRoughness} from './roughness.js?v=combined5';
 import {initFoundationHero} from './foundation-hero.js';
-const reduced=matchMedia('(prefers-reduced-motion: reduce)'),videos=[...document.querySelectorAll('video')],visible=new Set();let paused=reduced.matches;
-const toggle=document.querySelector('#motion-toggle');
-function sync(){toggle.textContent=paused?'Resume motion ▶':'Pause motion Ⅱ';toggle.setAttribute('aria-pressed',String(paused));videos.forEach(v=>{if(paused||!visible.has(v))v.pause();else if(!v.dataset.userPaused)v.play().catch(()=>{});});}
+const reduced=matchMedia('(prefers-reduced-motion: reduce)'),videos=[...document.querySelectorAll('video')],visible=new Set();let paused=false;
+function sync(){videos.forEach(v=>{if(paused||!visible.has(v))v.pause();else if(!v.dataset.userPaused)v.play().catch(()=>{});});}
 const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{const v=e.target;if(e.isIntersecting){visible.add(v);if(!v.src){v.src=v.dataset.src;v.load();}}else visible.delete(v);});sync();},{threshold:.15});
 videos.forEach(v=>{observer.observe(v);v.addEventListener('pause',()=>{if(!paused&&visible.has(v)&&!document.hidden)v.dataset.userPaused='1';});v.addEventListener('play',()=>delete v.dataset.userPaused);});
-toggle.addEventListener('click',()=>{paused=!paused;sync();});reduced.addEventListener('change',()=>{paused=reduced.matches;sync();});sync();
+sync();
 const sections=[...document.querySelectorAll('.foundation-lesson')],links=[...document.querySelectorAll('.topnav a')];
 function reading(){let current=sections[0];for(const s of sections){if(s.getBoundingClientRect().top<innerHeight*.4)current=s;else break;}links.forEach(a=>{if(a.hash==='#'+current.dataset.group)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});const max=document.documentElement.scrollHeight-innerHeight;document.querySelector('#reading-progress').style.width=(max?scrollY/max*100:0)+'%';}
 addEventListener('scroll',reading,{passive:true});addEventListener('resize',reading);reading();

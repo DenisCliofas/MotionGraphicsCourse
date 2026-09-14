@@ -139,10 +139,13 @@ for j,section in enumerate(rebuilt):
   rebuilt[j]=section[:start]+'<div class="roughness-demo"><div class="material-scene" id="shading-scene"><canvas role="img" aria-label="Flat and smooth shading comparison. Drag or use arrow keys to rotate."></canvas><span class="material-drag-hint">Drag to rotate</span></div><div><fieldset class="mode-controls"><legend>Surface shading</legend><label><input type="radio" name="surface-shading" value="flat" checked><span>Flat</span></label><label><input type="radio" name="surface-shading" value="smooth"><span>Smooth</span></label></fieldset><p id="shading-description" class="lead" aria-live="polite">Each face has a single normal, so the individual faces remain visible.</p><button type="button" class="arc-reset" id="show-shading-normals" aria-pressed="false">Show normals</button><p class="material-note">Normals at vertices: Flat keeps a separate direction for each adjoining face. Smooth shares a direction across adjoining faces. Orange arrows show the split or shared directions.</p></div></div></section>'
 sections=rebuilt
 
-index=(out/'index.html').read_text(encoding='utf-8');head=index.split('<body>')[0];head=re.sub(r'<title>.*?</title>','<title>Part 2 — Blender Foundations</title>',head);head=re.sub(r'<script.*?</script>','<script type="module" src="foundation.js"></script>',head)
-head=head.replace('src="foundation.js"',f'src="foundation.js?v={hashlib.sha256((out/"foundation.js").read_bytes()).hexdigest()[:12]}"')
-head=re.sub(r'(<script type="module" src="foundation.js[^"]*"></script>)+',lambda m:m[0].split('</script>')[0]+'</script>',head)
-head=head.replace('</head>','<script defer src="fullscreen.js"></script></head>')
+from build_language import build as build_language, script_tag
+build_language()
+index=(out/'index.html').read_text(encoding='utf-8')
+head=index.split('<body>')[0]
+head=re.sub(r'<title>.*?</title>','<title>Part 2 — Blender Foundations</title>',head)
+head=re.sub(r'<script.*?</script>','',head,flags=re.S)
+head=head.replace('</head>',f'<script type="module" src="foundation.js?v={hashlib.sha256((out/"foundation.js").read_bytes()).hexdigest()[:12]}"></script><script defer src="fullscreen.js"></script>{script_tag()}</head>')
 header=index[index.index('<header'):index.index('</header>')+9];header=re.sub(r'<nav class="topnav".*?</nav>','<nav class="topnav" aria-label="Course navigation">'+''.join(f'<a href="#{g[1]}">{g[2]}</a>' for g in groups)+'</nav>',header);header=re.sub(r'<details class="contents">.*?</details>','<a class="part-link" href="index.html">Part 1 ↗</a>',header);header=re.sub(r'<a class="part-link".*?</a>','<a class="part-link" href="index.html">Part 1 ↗</a>',header);header=header.replace('href="#slide-1"','href="#interface"')
 (out/'foundation.html').write_text(head+'<body class="foundation-page"><a class="skip" href="#course">Skip to course</a>'+header+'<main id="course">'+''.join(sections)+'</main><footer class="lesson"><a class="part-link" href="index.html">Back to Part 1 ↗</a></footer></body></html>',encoding='utf-8')
 (root/'foundation-source.json').write_text(json.dumps(slides,indent=2),encoding='utf-8')
