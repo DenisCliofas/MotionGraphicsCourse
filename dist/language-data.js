@@ -531,5 +531,6 @@ export default {
   "First path handle. Drag or use arrow keys.": "Erster Pfadgriff. Ziehen oder Pfeiltasten verwenden.",
   "Second path handle. Drag or use arrow keys.": "Zweiter Pfadgriff. Ziehen oder Pfeiltasten verwenden.",
   "Interactive material sphere. Drag to rotate.": "Interaktive Materialkugel. Zum Drehen ziehen.",
-  "Flat and smooth shading comparison. Drag or use arrow keys to rotate.": "Vergleich von flacher und glatter Schattierung. Zum Drehen ziehen oder Pfeiltasten verwenden."
+  "Flat and smooth shading comparison. Drag or use arrow keys to rotate.": "Vergleich von flacher und glatter Schattierung. Zum Drehen ziehen oder Pfeiltasten verwenden.",
+  "Open course in a new tab": "Kurs in neuem Tab öffnen"
 };

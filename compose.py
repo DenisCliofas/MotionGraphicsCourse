@@ -82,6 +82,9 @@ from build_language import build as build_language, script_tag
 build_language()
 page=re.sub(r'<script[^>]*src="language.js[^"]*"[^>]*></script>', '', page)
 page=page.replace('</head>', script_tag()+'</head>')
+page=re.sub(r'<a class="wordmark"[^>]*>', '<a class="wordmark" href="index.html" target="_blank" rel="noopener" title="Open course in a new tab">', page)
+if 'class="fullscreen-toggle"' not in page:
+ page=page.replace('<div class="header-actions">', '<div class="header-actions"><a class="fullscreen-toggle" href="index.html" target="_blank" rel="noopener" aria-label="Enter fullscreen" title="Enter fullscreen">⛶</a><span class="fullscreen-status" role="status"></span>')
 css_version=hashlib.sha256((root/'dist/styles.css').read_bytes()).hexdigest()[:12]
 module_paths=[root/'dist'/name for name in ('app.js','motion.js','learning.js','playground.js','wood-study.js')]
 module_sources=[re.sub(r"\.js\?v=[^\'\"\s]+",'.js',file.read_text(encoding='utf-8')) for file in module_paths]
@@ -92,6 +95,8 @@ for file,source in zip(module_paths,module_sources):
 js_version=hashlib.sha256((root/'dist/app.js').read_bytes()).hexdigest()[:12]
 page=re.sub(r'src="app\.js(?:\?[^" ]*)?"',f'src="app.js?v={js_version}"',page)
 page=re.sub(r'href="styles\.css(?:\?[^" ]*)?"',f'href="styles.css?v={css_version}"',page)
-page=page.replace('</head>', '<script defer src="fullscreen.js"></script></head>') if 'src="fullscreen.js"' not in page else page
+page=re.sub(r'<script[^>]*src="fullscreen.js[^\"]*"[^>]*></script>', '', page)
+fullscreen_version=hashlib.sha256((root/'dist/fullscreen.js').read_bytes()).hexdigest()[:12]
+page=page.replace('</head>', f'<script defer src="fullscreen.js?v={fullscreen_version}"></script></head>')
 p.write_text(page,encoding='utf-8')
 print('Composed streamlined course with merged references and inline experiments.')

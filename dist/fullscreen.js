@@ -1,5 +1,24 @@
-const button=document.createElement('button');button.type='button';button.className='fullscreen-toggle';button.textContent='⛶';button.setAttribute('aria-label','Enter fullscreen');button.title='Enter fullscreen';document.querySelector('.header-actions')?.prepend(button);
-const status=document.createElement('span');status.className='fullscreen-status';status.setAttribute('role','status');button.after(status);
-function sync(){const active=Boolean(document.fullscreenElement);button.setAttribute('aria-pressed',String(active));button.setAttribute('aria-label',active?'Exit fullscreen':'Enter fullscreen');button.title=active?'Exit fullscreen':'Enter fullscreen';}
-button.addEventListener('click',async()=>{status.textContent='';try{if(document.fullscreenElement)await document.exitFullscreen();else if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen();else throw new Error('Fullscreen unavailable');}catch(error){status.replaceChildren(document.createTextNode('Fullscreen is unavailable here. '));const link=document.createElement('a');link.href=location.href;link.target='_blank';link.rel='noopener';link.textContent='Open course in a new tab ↗';status.append(link);}});
-document.addEventListener('fullscreenchange',sync);sync();
+(() => {
+ const button=document.querySelector('.fullscreen-toggle');
+ const status=document.querySelector('.fullscreen-status');
+ if(!button||!status)return;
+ button.href=location.href;
+ function sync(){
+  const active=Boolean(document.fullscreenElement);
+  const label=active?'Exit fullscreen':document.fullscreenEnabled?'Enter fullscreen':'Open course in a new tab';
+  button.setAttribute('aria-label',label);button.title=label;
+ }
+ button.addEventListener('click',async event=>{
+  button.href=location.href;
+  if(!document.fullscreenEnabled)return; // Native new-tab link when the embed blocks fullscreen.
+  event.preventDefault();status.textContent='';
+  try{
+   if(document.fullscreenElement)await document.exitFullscreen();
+   else await document.documentElement.requestFullscreen();
+  }catch{
+   status.replaceChildren(document.createTextNode('Fullscreen is unavailable here. '));
+   const link=document.createElement('a');link.href=location.href;link.target='_blank';link.rel='noopener';link.textContent='Open course in a new tab ↗';status.append(link);
+  }
+ });
+ document.addEventListener('fullscreenchange',sync);sync();
+})();

@@ -1,4 +1,4 @@
-import german from './language-data.js?v=9fa5f4a45c02';
+import german from './language-data.js?v=4a2532ac4dd8';
 
 const normalize = text => text.replace(/\s+/g, ' ').trim();
 const reverse = new Map(Object.entries(german).map(([en, de]) => [de, en]));

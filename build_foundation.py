@@ -145,7 +145,7 @@ index=(out/'index.html').read_text(encoding='utf-8')
 head=index.split('<body>')[0]
 head=re.sub(r'<title>.*?</title>','<title>Part 2 — Blender Foundations</title>',head)
 head=re.sub(r'<script.*?</script>','',head,flags=re.S)
-head=head.replace('</head>',f'<script type="module" src="foundation.js?v={hashlib.sha256((out/"foundation.js").read_bytes()).hexdigest()[:12]}"></script><script defer src="fullscreen.js"></script>{script_tag()}</head>')
+head=head.replace('</head>',f'<script type="module" src="foundation.js?v={hashlib.sha256((out/"foundation.js").read_bytes()).hexdigest()[:12]}"></script><script defer src="fullscreen.js?v={hashlib.sha256((out/"fullscreen.js").read_bytes()).hexdigest()[:12]}"></script>{script_tag()}</head>')
 header=index[index.index('<header'):index.index('</header>')+9];header=re.sub(r'<nav class="topnav".*?</nav>','<nav class="topnav" aria-label="Course navigation">'+''.join(f'<a href="#{g[1]}">{g[2]}</a>' for g in groups)+'</nav>',header);header=re.sub(r'<details class="contents">.*?</details>','<a class="part-link" href="index.html">Part 1 ↗</a>',header);header=re.sub(r'<a class="part-link".*?</a>','<a class="part-link" href="index.html">Part 1 ↗</a>',header);header=header.replace('href="#slide-1"','href="#interface"')
 (out/'foundation.html').write_text(head+'<body class="foundation-page"><a class="skip" href="#course">Skip to course</a>'+header+'<main id="course">'+''.join(sections)+'</main><footer class="lesson"><a class="part-link" href="index.html">Back to Part 1 ↗</a></footer></body></html>',encoding='utf-8')
 (root/'foundation-source.json').write_text(json.dumps(slides,indent=2),encoding='utf-8')
