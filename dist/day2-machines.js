@@ -5,7 +5,7 @@ function selectLesson(id,updateHash=false){
  tabs.forEach(b=>{const active=b===chosen;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;const panel=document.getElementById(b.getAttribute('aria-controls'));panel.hidden=!active;if(!active){panel.querySelector('video')?.pause();const tutorial=panel.querySelector('.tutorial-player');if(tutorial)tutorial.open=false;}});
  if(updateHash)history.replaceState(null,'','#'+id);
 }
-tabs.forEach((b,i)=>{b.addEventListener('click',()=>selectLesson(b.dataset.lesson,true));b.addEventListener('keydown',e=>{let n;if(e.key==='ArrowRight')n=(i+1)%tabs.length;if(e.key==='ArrowLeft')n=(i+tabs.length-1)%tabs.length;if(e.key==='Home')n=0;if(e.key==='End')n=tabs.length-1;if(n!==undefined){e.preventDefault();tabs[n].focus();selectLesson(tabs[n].dataset.lesson,true);}});});
+tabs.forEach((b,i)=>{b.addEventListener('click',()=>{selectLesson(b.dataset.lesson,true);document.getElementById(b.getAttribute('aria-controls')).scrollIntoView({behavior:'smooth',block:'start'});});b.addEventListener('keydown',e=>{let n;if(e.key==='ArrowRight')n=(i+1)%tabs.length;if(e.key==='ArrowLeft')n=(i+tabs.length-1)%tabs.length;if(e.key==='Home')n=0;if(e.key==='End')n=tabs.length-1;if(n!==undefined){e.preventDefault();tabs[n].focus();selectLesson(tabs[n].dataset.lesson,true);}});});
 function fromHash(){const id=location.hash.slice(1);if(tabs.some(b=>b.dataset.lesson===id)){selectLesson(id);document.querySelector('#toolkit').scrollIntoView();}}
 fromHash();addEventListener('hashchange',fromHash);
 const storageKey='vtech-dynamic-machines-class-v1',form=document.querySelector('#machine-plan'),checks=[...document.querySelectorAll('[data-check]')],status=document.querySelector('#plan-status');
@@ -21,3 +21,9 @@ addEventListener('scroll',progress,{passive:true});addEventListener('resize',pro
 
 // Closing a tutorial also stops its embedded playback.
 document.querySelectorAll('.tutorial-player').forEach(details=>details.addEventListener('toggle',()=>{if(!details.open){const frame=details.querySelector('iframe');frame.src=frame.src;}}));
+
+// Animate gallery cards only while visible; respect reduced-motion preferences.
+const galleryMotion=matchMedia('(prefers-reduced-motion: reduce)');
+const galleryObserver=new IntersectionObserver(entries=>entries.forEach(({target,isIntersecting})=>{if(isIntersecting&&!galleryMotion.matches&&!document.hidden)target.play().catch(()=>{});else target.pause();}),{threshold:.2});
+document.querySelectorAll('.technique-card video').forEach(video=>galleryObserver.observe(video));
+addEventListener('visibilitychange',()=>{if(document.hidden)document.querySelectorAll('.technique-card video').forEach(video=>video.pause());});

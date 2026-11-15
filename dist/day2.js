@@ -5,7 +5,7 @@ document.querySelectorAll('.d2-stepper').forEach(figure=>{
  const steps=JSON.parse(figure.dataset.steps);let index=0;
  const image=figure.querySelector('img'),caption=figure.querySelector('figcaption'),count=figure.querySelector('output');
  const prev=figure.querySelector('[data-prev]'),next=figure.querySelector('[data-next]'),large=figure.querySelector('.d2-step-image');
- function show(i){index=(i+steps.length)%steps.length;image.src=`assets/day2/${steps[index][0]}.png`;image.alt=steps[index][1];caption.textContent=steps[index][1];count.textContent=`${index+1} / ${steps.length}`;prev.disabled=index===0;next.textContent=index===steps.length-1?'Start again ↻':'Next →';large.querySelector('span').textContent=index===steps.length-1?'Click to start again ↻':'Click for next step →';}
+ function show(i){index=(i+steps.length)%steps.length;image.src=`assets/day2/${steps[index][0]}.svg?v=rig-update`;image.alt=steps[index][1];caption.textContent=steps[index][1];count.textContent=`${index+1} / ${steps.length}`;prev.disabled=index===0;next.textContent=index===steps.length-1?'Start again ↻':'Next →';large.querySelector('span').textContent=index===steps.length-1?'Click to start again ↻':'Click for next step →';}
  prev.addEventListener('click',()=>show(index-1));next.addEventListener('click',()=>show(index+1));large.addEventListener('click',()=>show(index+1));show(0);
 });
 
