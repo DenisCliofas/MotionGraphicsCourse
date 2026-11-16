@@ -1,3 +1,4 @@
+import { createBallRayTracer } from './ball-raytracer.js';
 import * as THREE from './assets/three.module.js';
 const host=document.querySelector('[data-day2-scene]');
 if(host){try{
@@ -49,20 +50,43 @@ if(machine){
  colors.forEach((color,i)=>{const mesh=new THREE.Mesh(new THREE.SphereGeometry(.75,20,40,i*Math.PI/3,Math.PI/3),material(color));mesh.castShadow=true;ball.add(mesh);});
 }
 if(!machine){const ring=new THREE.Mesh(new THREE.TorusGeometry(1.3,.025,12,80),material(0xc7bcae));ring.rotation.x=-Math.PI/2;ring.position.y=.025;group.add(ring);}
-let dragging=false,lastX=0,rotation=0,interacted=false;
+let dragging=false,rotation=0,interacted=false;
+let verticalVelocity=0,resting=false;
+const ballRadius=.75,gravity=9.81,restitution=.7;
+if(!machine){ball.position.set(0,3.5,0);ball.rotation.set(.2,0,.2);}
+function stepBounce(dt){
+ let remaining=Math.min(dt,.05);
+ for(let n=0;n<8&&remaining>0&&!resting;n++){
+  const height=Math.max(0,ball.position.y-ballRadius);
+  const impactTime=(verticalVelocity+Math.sqrt(verticalVelocity*verticalVelocity+2*gravity*height))/gravity;
+  if(impactTime>remaining){ball.position.y+=verticalVelocity*remaining-.5*gravity*remaining*remaining;verticalVelocity-=gravity*remaining;break;}
+  verticalVelocity-=gravity*impactTime;ball.position.y=ballRadius;remaining-=impactTime;
+  verticalVelocity=-verticalVelocity*restitution;
+  if(verticalVelocity<.25){verticalVelocity=0;resting=true;}
+ }
+}
 const target=new THREE.Vector3(0,2.4,0),raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2(),dragPlane=new THREE.Plane(new THREE.Vector3(0,1,0),-2.4),hit=new THREE.Vector3(),dragOffset=new THREE.Vector3();
-const canvas=renderer.domElement;canvas.style.touchAction=machine?'none':'pan-y';
+const canvas=renderer.domElement;canvas.style.touchAction='none';
+if(!machine){const normal=camera.position.clone();normal.y=0;normal.normalize();dragPlane.setFromNormalAndCoplanarPoint(normal,new THREE.Vector3());}
 function ray(e){const rect=canvas.getBoundingClientRect();pointer.set((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);}
 function limitTarget(){target.x=THREE.MathUtils.clamp(target.x,-3.7,3.7);target.z=THREE.MathUtils.clamp(target.z,-2.9,2.9);}
-canvas.addEventListener('pointerdown',e=>{if(e.button!==0)return;ray(e);
- if(machine){scene.updateMatrixWorld(true);if(!raycaster.intersectObjects(ball.children,true).length)return;if(!raycaster.ray.intersectPlane(dragPlane,hit))return;dragOffset.copy(ball.position).sub(hit);interacted=true;}
- dragging=true;lastX=e.clientX;canvas.setPointerCapture(e.pointerId);canvas.style.cursor='grabbing';});
-canvas.addEventListener('pointermove',e=>{ray(e);if(machine){if(dragging&&raycaster.ray.intersectPlane(dragPlane,hit)){target.copy(hit).add(dragOffset);target.y=2.4;limitTarget();}else if(!dragging){canvas.style.cursor=raycaster.intersectObjects(ball.children,true).length?'grab':'default';}}else if(dragging){rotation+=(e.clientX-lastX)*.008;lastX=e.clientX;}});
-function release(){dragging=false;canvas.style.cursor=machine?'default':'grab';}
+canvas.addEventListener('pointerdown',e=>{if(e.button!==0)return;ray(e);scene.updateMatrixWorld(true);
+ if(!raycaster.intersectObjects(ball.children,true).length)return;
+ if(!raycaster.ray.intersectPlane(dragPlane,hit))return;
+ dragOffset.copy(ball.position).sub(hit);interacted=true;dragging=true;verticalVelocity=0;resting=false;
+ canvas.focus({preventScroll:true});canvas.setPointerCapture(e.pointerId);canvas.style.cursor='grabbing';});
+canvas.addEventListener('pointermove',e=>{ray(e);
+ if(dragging&&raycaster.ray.intersectPlane(dragPlane,hit)){
+  if(machine){target.copy(hit).add(dragOffset);target.y=2.4;limitTarget();}
+  else{ball.position.y=THREE.MathUtils.clamp(hit.y+dragOffset.y,ballRadius,4.6);verticalVelocity=0;}
+ }else if(!dragging){scene.updateMatrixWorld(true);canvas.style.cursor=raycaster.intersectObjects(ball.children,true).length?'grab':'default';}});
+function release(){if(dragging&&!machine){verticalVelocity=0;resting=ball.position.y<=ballRadius;}dragging=false;canvas.style.cursor='default';}
 canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',release);canvas.addEventListener('lostpointercapture',release);
 if(machine){canvas.tabIndex=0;canvas.setAttribute('role','group');canvas.setAttribute('aria-label','Move the ball with arrow keys, or drag it. Nearby plates rise toward the ball.');canvas.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home'].includes(e.key))return;e.preventDefault();interacted=true;if(e.key==='Home')target.set(0,2.4,0);if(e.key==='ArrowLeft')target.x-=.3;if(e.key==='ArrowRight')target.x+=.3;if(e.key==='ArrowUp')target.z-=.3;if(e.key==='ArrowDown')target.z+=.3;limitTarget();});}
+if(!machine){canvas.tabIndex=0;canvas.setAttribute('role','group');canvas.setAttribute('aria-label','Grab the ball and lift it, then release to bounce. Keyboard: Space to grab or release, Up and Down to change height.');canvas.addEventListener('keydown',e=>{if(![' ','ArrowUp','ArrowDown'].includes(e.key))return;e.preventDefault();interacted=true;if(e.key===' '){if(e.repeat)return;if(dragging)release();else{dragging=true;verticalVelocity=0;resting=false;}}else{dragging=true;resting=false;verticalVelocity=0;ball.position.y=THREE.MathUtils.clamp(ball.position.y+(e.key==='ArrowUp'?.25:-.25),ballRadius,4.6);}});canvas.addEventListener('blur',release);}
 new ResizeObserver(()=>{const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();}).observe(host);
 let visible=true;new IntersectionObserver(entries=>visible=entries[0].isIntersecting).observe(host);
+const renderBall=machine?null:createBallRayTracer(renderer,camera,ball);
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');const clock=new THREE.Clock();let t=0;
 renderer.setAnimationLoop(()=>{const dt=clock.getDelta();if(!visible||document.hidden)return;if(!reduced.matches)t+=Math.min(dt,.05);group.rotation.y=rotation;
 if(machine){
@@ -73,12 +97,12 @@ if(machine){
  slats.forEach(tile=>{const distance=Math.hypot(tile.position.x-ball.position.x,tile.position.z-ball.position.z);const u=THREE.MathUtils.clamp((2.7-distance)/1.8,0,1),influence=u*u*(3-2*u);const height=1.2*influence;
  tile.position.y=THREE.MathUtils.lerp(tile.position.y,height,reduced.matches?1:1-Math.exp(-12*Math.min(dt,.05)));
  tile.material.color.set(0xe0e5ec).lerp(new THREE.Color(0x2864bd),influence);});
-}else{const phase=(t%2)/2;ball.position.y=.75+3*4*phase*(1-phase);ball.rotation.set(.15,t*.6,.2);}
+}else if(!dragging&&(!reduced.matches||interacted)){stepBounce(dt);}
 if(machine&&reflectionTick++%3===0){
   const background=scene.background;scene.background=scene.userData.reflectionBackground||new THREE.Color(0x303b46);
   group.updateMatrixWorld(true);ball.getWorldPosition(reflectionCamera.position);ball.visible=false;
   reflectionCamera.update(renderer,scene);ball.visible=true;scene.background=background;
  }
- renderer.render(scene,camera);});
+ if(renderBall)renderBall();else renderer.render(scene,camera);});
 host.classList.add('scene-ready');
 }catch(error){console.warn('Day 2 scene unavailable',error);}}
