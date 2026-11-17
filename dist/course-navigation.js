@@ -19,11 +19,11 @@
   for(const n of [1,2]){
    const group=document.createElement('div');group.className='course-day-group';const heading=document.createElement('strong');heading.textContent=`${day} ${n}`;group.append(heading);
    for(const p of pages.filter(p=>p.day===n)){
-    const a=document.createElement('a');a.href=p.file+(de&&p.day===1?'?lang=de':'');a.innerHTML=`<span>${partName} ${p.part}</span><b>${de?p.de:p.title}</b>`;
+    const a=document.createElement('a');a.href=p.file+('?lang='+(de?'de':'en'));a.innerHTML=`<span>${partName} ${p.part}</span><b>${de?p.de:p.title}</b>`;
     if(p===current)a.setAttribute('aria-current','page');group.append(a);
    }list.append(group);
   }
-  if(part){const target=pages.find(p=>p.day===current.day&&p.part!==current.part);part.setAttribute('translate','no');part.href=target.file+(de&&target.day===1?'?lang=de':'');part.textContent=`${partName} ${target.part} ↗`;part.title=`${day} ${target.day} · ${partName} ${target.part}: ${de?target.de:target.title}`;}
+  if(part){const target=pages.find(p=>p.day===current.day&&p.part!==current.part);part.setAttribute('translate','no');part.href=target.file+('?lang='+(de?'de':'en'));part.textContent=`${partName} ${target.part} ↗`;part.title=`${day} ${target.day} · ${partName} ${target.part}: ${de?target.de:target.title}`;}
  }
  render();new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
  document.addEventListener('click',e=>{if(!menu.contains(e.target))menu.open=false;});

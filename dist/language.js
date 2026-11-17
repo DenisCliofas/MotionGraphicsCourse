@@ -1,4 +1,6 @@
-import german from './language-data.js?v=4a2532ac4dd8';
+import baseGerman from './language-data.js?v=4a2532ac4dd8';
+import day2German from './language-day2-data.js?v=1';
+const german = {...baseGerman, ...day2German};
 
 const normalize = text => text.replace(/\s+/g, ' ').trim();
 const reverse = new Map(Object.entries(german).map(([en, de]) => [de, en]));
@@ -13,6 +15,7 @@ const excluded = 'script, style, code, pre, [translate="no"], .language-toggle';
 function translate(text) {
   if (german[text]) return german[text];
   let match;
+  if ((match = text.match(/^(\d+) of (\d+) checked$/))) return `${match[1]} von ${match[2]} geprüft`;
   if ((match = text.match(/^Part 2 \/ (.+)$/))) return `Teil 2 / ${translate(match[1])}`;
   if ((match = text.match(/^Step (\d+) of (\d+)$/))) return `Schritt ${match[1]} von ${match[2]}`;
   if ((match = text.match(/^Show step (\d+)$/))) return `Schritt ${match[1]} anzeigen`;
@@ -49,6 +52,11 @@ function visit(root) {
     return;
   }
   if (root.nodeType !== Node.ELEMENT_NODE || root.matches(excluded)) return;
+  if (root.tagName === 'IMG') {
+    const src = root.getAttribute('src') || '';
+    const localized = src.replace(/(assets\/day2\/(?:rig|graph|handles|keyframes|autokey))(?:-de)?\.svg/, `$1${language === 'de' ? '-de' : ''}.svg`);
+    if (src !== localized) root.setAttribute('src', localized);
+  }
   for (const name of attributes) if (root.hasAttribute(name)) {
     updateValue(root, name, root.getAttribute(name), value => root.setAttribute(name, value));
   }
@@ -61,7 +69,7 @@ button.className = 'language-toggle';
 button.innerHTML = '<span lang="en">EN</span><span aria-hidden="true">/</span><span lang="de">DE</span>';
 document.querySelector('.header-actions')?.prepend(button);
 
-const options = {subtree:true, childList:true, characterData:true, attributes:true, attributeFilter:attributes};
+const options = {subtree:true, childList:true, characterData:true, attributes:true, attributeFilter:[...attributes, 'src']};
 const observer = new MutationObserver(records => {
   observer.disconnect();
   const roots = new Set();
@@ -94,7 +102,7 @@ document.addEventListener('click', event => {
   const link = event.target.closest('a[href]');
   if (!link || link.getAttribute('href').startsWith('#')) return;
   const url = new URL(link.href);
-  if (url.origin === location.origin && /\/(?:index|foundation)\.html$/.test(url.pathname)) {
+  if (url.origin === location.origin && /\/(?:index|foundation|day2|day2-machines)\.html$/.test(url.pathname)) {
     url.searchParams.set('lang', language);link.href = url.href;
   }
 });
